@@ -1,6 +1,6 @@
-# 📚 Lorekeeper
+# 📚 Talesmithing
 
-**Lorekeeper** is a full-stack mobile application that helps tabletop RPG players and game masters manage their fictional universes — characters, locations, items, timelines, relationships, and notes — all in one place, accessible from any device.
+**Talesmithing** is a full-stack mobile application that helps tabletop RPG players and game masters manage their fictional universes — characters, locations, items, timelines, relationships, and notes — all in one place, accessible from any device.
 
 > 🛠️ Built entirely in **TypeScript** with **NestJS** (backend) and **Expo (React Native)** (frontend).
 
@@ -8,14 +8,14 @@
 
 ## 🎲 Who is this for?
 
-Lorekeeper is made for:
+Talesmithing is made for:
 
 - 🧙‍♂️ **Game Masters** running complex tabletop campaigns
 - 🧝 **Players** who want to track their characters and adventures
 - ✍️ **Worldbuilders & writers** creating their own settings
 - 🎨 **Creative teams** working together on shared universes
 
-Whether you're managing a dungeon crawl, a political drama, or a galactic saga — Lorekeeper gives you the tools to structure and collaborate on your lore.
+Whether you're managing a dungeon crawl, a political drama, or a galactic saga — Talesmithing gives you the tools to structure and collaborate on your lore.
 
 ---
 
@@ -81,7 +81,7 @@ Whether you're managing a dungeon crawl, a political drama, or a galactic saga �
 
 This project is released under the **MIT License**.
 
-> ⚠️ **Disclaimer**: Lorekeeper is currently a **work-in-progress** personal project, shared publicly for **educational and portfolio purposes**.  
+> ⚠️ **Disclaimer**: Talesmithing is currently a **work-in-progress** personal project, shared publicly for **educational and portfolio purposes**.  
 > Features, structure, and code may change frequently as development evolves.
 
 Feel free to explore, fork, or draw inspiration from the repository.  
