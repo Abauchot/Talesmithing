@@ -47,6 +47,75 @@ Whether you're managing a dungeon crawl, a political drama, or a galactic saga �
 
 ---
 
+## 🛠 Getting Started
+
+### Backend
+
+1. Navigate to the backend directory:
+```bash
+cd backend
+```
+
+2. Install dependencies:
+```bash
+pnpm install
+```
+
+3. Setup environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your database configuration
+```
+
+4. Setup the database:
+```bash
+pnpm run prisma:generate
+pnpm run prisma:migrate
+```
+
+5. Start the development server:
+```bash
+pnpm run start:dev
+```
+
+#### Running Tests
+
+```bash
+# Unit tests
+pnpm run test
+
+# Tests in watch mode (auto-reload on changes)
+pnpm run test:watch
+
+# End-to-end tests
+pnpm run test:e2e
+
+# Test coverage report
+pnpm run test:cov
+
+# Debug tests
+pnpm run test:debug
+```
+
+### Frontend
+
+1. Navigate to the frontend directory:
+```bash
+cd frontend
+```
+
+2. Install dependencies:
+```bash
+pnpm install
+```
+
+3. Start the development server:
+```bash
+npx expo start
+```
+
+---
+
 ## 🧱 Core Features
 
 - 🔐 **Auth**: register, login, and manage user roles (owner, editor, viewer)
