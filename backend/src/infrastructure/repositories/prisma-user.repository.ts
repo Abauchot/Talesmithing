@@ -20,6 +20,7 @@ export class PrismaUserRepository implements UserRepository {
       userData.id,
       userData.email,
       userData.name,
+      userData.password,
       userData.createdAt,
       userData.updatedAt,
     );
@@ -38,16 +39,18 @@ export class PrismaUserRepository implements UserRepository {
       userData.id,
       userData.email,
       userData.name,
+      userData.password,
       userData.createdAt,
       userData.updatedAt,
     );
   }
 
-  async create(email: string, name?: string): Promise<User> {
+  async create(email: string, password: string, name: string): Promise<User> {
     const userData = await this.databaseService.user.create({
       data: {
         email,
-        name: name || null,
+        password,
+        name,
       },
     });
 
@@ -55,6 +58,7 @@ export class PrismaUserRepository implements UserRepository {
       userData.id,
       userData.email,
       userData.name,
+      userData.password,
       userData.createdAt,
       userData.updatedAt,
     );
@@ -66,6 +70,7 @@ export class PrismaUserRepository implements UserRepository {
       data: {
         email: user.email,
         name: user.name,
+        password: user.password,
         updatedAt: new Date(),
       },
     });
@@ -74,6 +79,7 @@ export class PrismaUserRepository implements UserRepository {
       userData.id,
       userData.email,
       userData.name,
+      userData.password,
       userData.createdAt,
       userData.updatedAt,
     );
@@ -94,6 +100,7 @@ export class PrismaUserRepository implements UserRepository {
           userData.id,
           userData.email,
           userData.name,
+          userData.password,
           userData.createdAt,
           userData.updatedAt,
         ),

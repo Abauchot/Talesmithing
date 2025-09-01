@@ -17,6 +17,7 @@ export class UserService {
   async createUser(createUserDto: CreateUserDto): Promise<UserResponseDto> {
     const user = await this.createUserUseCase.execute(
       createUserDto.email,
+      createUserDto.password,
       createUserDto.name,
     );
     return this.mapToResponseDto(user);

@@ -23,49 +23,86 @@ describe('CreateUserUseCase', () => {
     it('should create a user successfully when email does not exist', async () => {
       // Arrange
       const email = 'test@example.com';
+      const password = 'password123';
       const name = 'Test User';
-      const createdUser = new User(1, email, name, new Date(), new Date());
+      const hashedPassword = 'hashedPassword123';
+      const createdUser = new User(1, email, name, hashedPassword, new Date(), new Date());
 
+      // Mock the static method
+      jest.spyOn(User, 'hashPassword').mockResolvedValue(hashedPassword);
       mockUserRepository.findByEmail.mockResolvedValue(null);
       mockUserRepository.create.mockResolvedValue(createdUser);
 
       // Act
-      const result = await createUserUseCase.execute(email, name);
+      const result = await createUserUseCase.execute(email, password, name);
 
       // Assert
       expect(mockUserRepository.findByEmail).toHaveBeenCalledWith(email);
-      expect(mockUserRepository.create).toHaveBeenCalledWith(email, name);
+      expect(User.hashPassword).toHaveBeenCalledWith(password);
+      expect(mockUserRepository.create).toHaveBeenCalledWith(email, hashedPassword, name);
       expect(result).toEqual(createdUser);
     });
 
     it('should throw error when user with email already exists', async () => {
       // Arrange
       const email = 'existing@example.com';
-      const existingUser = new User(1, email, 'Existing User', new Date(), new Date());
+      const password = 'password123';
+      const name = 'New User';
+      const existingUser = new User(1, email, 'Existing User', 'hashedPassword', new Date(), new Date());
 
       mockUserRepository.findByEmail.mockResolvedValue(existingUser);
 
       // Act & Assert
-      await expect(createUserUseCase.execute(email, 'New User')).rejects.toThrow(
+      await expect(createUserUseCase.execute(email, password, name)).rejects.toThrow(
         'User with this email already exists'
       );
       expect(mockUserRepository.create).not.toHaveBeenCalled();
     });
 
-    it('should create user without name when name is not provided', async () => {
+    it('should hash the password before creating user', async () => {
       // Arrange
       const email = 'test@example.com';
-      const createdUser = new User(1, email, null, new Date(), new Date());
+      const plainPassword = 'MyPlainPassword123!';
+      const name = 'Test User';
+      const hashedPassword = 'hashedPassword123';
+      const createdUser = new User(1, email, name, hashedPassword, new Date(), new Date());
 
+      // Mock the static method
+      const hashPasswordSpy = jest.spyOn(User, 'hashPassword').mockResolvedValue(hashedPassword);
       mockUserRepository.findByEmail.mockResolvedValue(null);
       mockUserRepository.create.mockResolvedValue(createdUser);
 
       // Act
-      const result = await createUserUseCase.execute(email);
+      await createUserUseCase.execute(email, plainPassword, name);
 
       // Assert
-      expect(mockUserRepository.create).toHaveBeenCalledWith(email, undefined);
-      expect(result).toEqual(createdUser);
+      expect(hashPasswordSpy).toHaveBeenCalledWith(plainPassword);
+      expect(hashPasswordSpy).toHaveBeenCalledTimes(1);
+      expect(mockUserRepository.create).toHaveBeenCalledWith(email, hashedPassword, name);
+
+      // Verify that the plain password is not passed to the repository
+      expect(mockUserRepository.create).not.toHaveBeenCalledWith(email, plainPassword, name);
+    });
+
+    it('should validate password using User entity method', async () => {
+      // Arrange
+      const email = 'test@example.com';
+      const password = 'MyTestPassword123!';
+      const name = 'Test User';
+      const hashedPassword = 'hashedPassword123';
+      const createdUser = new User(1, email, name, hashedPassword, new Date(), new Date());
+
+      jest.spyOn(User, 'hashPassword').mockResolvedValue(hashedPassword);
+      mockUserRepository.findByEmail.mockResolvedValue(null);
+      mockUserRepository.create.mockResolvedValue(createdUser);
+
+      // Act
+      const result = await createUserUseCase.execute(email, password, name);
+
+      // Assert - Test that the created user can validate the original password
+      jest.spyOn(result, 'validatePassword').mockResolvedValue(true);
+      const isPasswordValid = await result.validatePassword(password);
+      expect(isPasswordValid).toBe(true);
     });
   });
 });

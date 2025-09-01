@@ -55,6 +55,7 @@ Infrastructure → Domain
 ## Usage
 
 ### Créer un nouvel utilisateur
+
 ```bash
 POST /users
 {
@@ -64,11 +65,13 @@ POST /users
 ```
 
 ### Récupérer un utilisateur
+
 ```bash
 GET /users/1
 ```
 
 ### Récupérer tous les utilisateurs
+
 ```bash
 GET /users
 ```
@@ -76,6 +79,7 @@ GET /users
 ## Tests
 
 Les tests sont organisés par couche :
+
 - Tests unitaires pour les use cases
 - Tests d'intégration pour les repositories
 - Tests e2e pour les contrôleurs
